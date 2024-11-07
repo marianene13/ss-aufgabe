@@ -27,10 +27,13 @@
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:text-gray-400">
                         <tr>
                             <th scope="col" class="px-6 py-4">
-                                Song name
+                                {{ __('Song name') }}
                             </th>
                             <th scope="col" class="px-6 py-4">
-                                Updated Date
+                                {{ __('Artist/s') }}
+                            </th>
+                            <th scope="col" class="px-6 py-4">
+                                {{ __('Updated Date') }}
                             </th>
                         </tr>
                         </thead>
@@ -43,6 +46,14 @@
                                             {{ $song->name }}
                                         </a>
                                     </th>
+                                    <td class="px-6 py-6">
+                                        @foreach($song->artists()->get() as $artist)
+                                            {{ $artist->name }}
+                                            @if(!$loop->last)
+                                                ,
+                                            @endif
+                                        @endforeach
+                                    </td>
                                     <td class="px-6 py-6">
                                         {{ $song->updated_at }}
                                     </td>

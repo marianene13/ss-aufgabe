@@ -30,13 +30,16 @@
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
                             <th scope="col" class="px-6 py-4">
-                                Song name
+                                {{ __('Song name') }}
                             </th>
-                            <th scope="col" class="px-6 py-4">
-                                Duration
+                            <th scope="col" class="px-6 py-3">
+                                {{ __('Artist/s') }}
                             </th>
-                            <th scope="col" class="px-6 py-4">
-                                Updated Date
+                            <th scope="col" class="px-6 py-3">
+                                {{ __('Duration') }}
+                            </th>
+                            <th scope="col" class="px-6 py-3">
+                                {{ __('Updated Date') }}
                             </th>
                         </tr>
                         </thead>
@@ -49,6 +52,14 @@
                                             {{ $song->name }}
                                         </a>
                                     </th>
+                                    <td class="px-6 py-6">
+                                        @foreach($song->artists()->get() as $artist)
+                                            {{ $artist->name }}
+                                            @if(!$loop->last)
+                                                ,
+                                            @endif
+                                        @endforeach
+                                    </td>
                                     <td class="px-6 py-6">
                                         {{ $song->durationInMinutes() }}
                                     </td>

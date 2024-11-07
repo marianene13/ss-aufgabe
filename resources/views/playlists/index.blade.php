@@ -52,16 +52,16 @@
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
                             <th scope="col" class="px-6 py-2">
-                                #
+                                {{ __('#') }}
                             </th>
                             <th scope="col" class="px-6 py-4">
-                                Name
+                                {{ __('Name') }}
                             </th>
                             <th scope="col" class="px-6 py-4">
-                                Track(s)
+                                {{ __('Track(s)') }}
                             </th>
                             <th scope="col" class="px-6 py-2">
-                                Updated
+                                {{ __('Updated') }}
                             </th>
                         </tr>
                         </thead>
