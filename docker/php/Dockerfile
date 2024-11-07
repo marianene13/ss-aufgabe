@@ -22,5 +22,5 @@ COPY ./vendor ./node_modules ./
 
 RUN chmod -R +x /usr/local/bin/
 RUN chown -R www-data /var
-RUN chmod -R +x /var
+RUN chmod -R 755 /var
 
