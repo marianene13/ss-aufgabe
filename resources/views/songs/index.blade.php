@@ -41,11 +41,11 @@
                         @if(count($songs) > 0)
                             @foreach($songs as $song)
                                 <tr class="bg-white border-b">
-                                    <th scope="row" class="px-6 py-6 font-medium text-gray-900 whitespace-nowrap">
+                                    <td class="px-6 py-6 font-medium text-gray-900 whitespace-nowrap">
                                         <a href="{{ route('songs.show', ['id' => $song->id]) }}">
                                             {{ $song->name }}
                                         </a>
-                                    </th>
+                                    </td>
                                     <td class="px-6 py-6">
                                         @foreach($song->artists()->get() as $artist)
                                             {{ $artist->name }}

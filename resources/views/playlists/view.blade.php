@@ -54,12 +54,12 @@
                         @if(count($songs) > 0)
                             @foreach($songs as $song)
                                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                                    <th scope="row" class="px-6 py-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                                    <td class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                         <a href="{{ route('songs.show', ['id' => $song->id]) }}">
                                             {{ $song->name }}
                                         </a>
-                                    </th>
-                                    <td class="px-6 py-6">
+                                    </td>
+                                    <td class="px-6 py-3">
                                         @foreach($song->artists()->get() as $artist)
                                             {{ $artist->name }}
                                             @if(!$loop->last)
@@ -67,10 +67,10 @@
                                             @endif
                                         @endforeach
                                     </td>
-                                    <td class="px-6 py-6">
+                                    <td class="px-6 py-3">
                                         {{ $song->durationInMinutes() }}
                                     </td>
-                                    <td class="px-6 py-6">
+                                    <td class="px-6 py-2">
                                         {{ $song->updated_at }}
                                     </td>
                                 </tr>

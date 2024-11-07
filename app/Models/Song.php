@@ -69,9 +69,9 @@ class Song extends Model
 
     public static function findByTrackObject(\stdClass $track): self
     {
-        $song = self::where('api_track_id', $track->id)->get();
+        $song = self::where('api_track_id', $track->id)->first();
 
-        if ($song->isEmpty()) {
+        if ($song === null) {
             $song = self::createFromTrackObject($track);
 
             foreach ($track->artists as $artist) {

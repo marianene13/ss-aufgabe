@@ -6,6 +6,7 @@ use App\Handlers\SpotifyHandler;
 use App\Models\Playlist;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PlaylistController extends Controller
 {
@@ -18,6 +19,7 @@ class PlaylistController extends Controller
 
         $playlists = Playlist::search($searchString)
             ->orderBy('created_at')
+            ->where('user_id', Auth::id())
             ->paginate(1);
 
         return view('playlists.index')
@@ -64,7 +66,8 @@ class PlaylistController extends Controller
         $playlist = Playlist::where('api_playlist_id', $apiPlaylistId)->get();
 
         if ($playlist->isEmpty()) {
-            Playlist::createFromPlaylistObject($handler->playlist($apiPlaylistId));
+            $playlist = Playlist::buildFromPlaylistObject($handler->playlist($apiPlaylistId));
+            Auth::user()->playlists()->save($playlist);
         }
 
         return redirect()->route('playlists.index');

@@ -5,6 +5,7 @@ namespace App\Models;
 use App\Handlers\SpotifyHandler;
 use Carbon\Traits\Timestamp;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Scout\Attributes\SearchUsingFullText;
@@ -48,6 +49,11 @@ class Playlist extends Model
         return $this->belongsToMany(Song::class, PlaylistSong::class)->withTimestamps();
     }
 
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
+    }
+
     public function loadSongs(SpotifyHandler $handler)
     {
         $songs = $this->songs();
@@ -78,9 +84,9 @@ class Playlist extends Model
         return $this->songs();
     }
 
-    public static function createFromPlaylistObject(\stdClass $playlist): self
+    public static function buildFromPlaylistObject(\stdClass $playlist): self
     {
-        return self::create([
+        return new self([
             'name' => $playlist->name,
             'description' => $playlist->description,
             'image_url' => $playlist->images[0]->url,
