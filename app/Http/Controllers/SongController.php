@@ -31,7 +31,8 @@ class SongController extends Controller
         return view('songs.view')
             ->with('pageTitle', 'View - '.ucwords($song->name))
             ->with('pageID', 'songs')
-            ->with('song', $song);
+            ->with('song', $song)
+            ->with('audioFeatures', $song->audioFeatures()->first());
     }
 
     /**

@@ -15,7 +15,7 @@
                     <form method="GET" action="{{ route('playlists.show', ['id' => $playlist->id]) }}" class="mt-6 space-y-6">
                         <div>
                             <x-input-label for="query" :value="__('Search by song name, spotify id, popularity')" />
-                            <x-text-input id="query" class="block mt-1 w-full" type="text" name="query" value="{{ $searchString }}" autofocus />
+                            <x-text-input id="query" class="block mt-1 w-full" type="text" name="query" value="{{ $searchString }}" />
                             <x-input-error :messages="$errors->get('query')" class="mt-2" />
                         </div>
                         <div class="flex items-center gap-4">
@@ -48,7 +48,7 @@
                             @foreach($songs as $song)
                                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                     <th scope="row" class="px-6 py-6 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                        <a href="{{ route('songs.show', ['id' => $song->id]) }}" target="_blank">
+                                        <a href="{{ route('songs.show', ['id' => $song->id]) }}">
                                             {{ $song->name }}
                                         </a>
                                     </th>

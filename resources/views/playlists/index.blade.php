@@ -18,7 +18,7 @@
                         <!-- API Playlist ID -->
                         <div>
                             <x-input-label for="api_playlist_id" :value="__('API Playlist ID')" />
-                            <x-text-input id="api_playlist_id" class="block mt-1 w-full" type="text" name="api_playlist_id" required autofocus />
+                            <x-text-input id="api_playlist_id" class="block mt-1 w-full" type="text" name="api_playlist_id" required />
                             <x-input-error :messages="$errors->get('api_playlist_id')" class="mt-2" />
                         </div>
                         <div class="flex items-center gap-4">
@@ -36,7 +36,7 @@
                         @csrf
                         <div>
                             <x-input-label for="query" :value="__('Playlist name')" />
-                            <x-text-input id="query" class="block mt-1 w-full" type="text" name="query" value="{{ $searchString }}" autofocus />
+                            <x-text-input id="query" class="block mt-1 w-full" type="text" name="query" value="{{ $searchString }}" />
                             <x-input-error :messages="$errors->get('query')" class="mt-2" />
                         </div>
                         <div class="flex items-center gap-4">
@@ -73,7 +73,7 @@
                                         {{ $loop->iteration }}
                                     </td>
                                     <td class="px-6 py-4">
-                                        <a href="{{ route('playlists.show', ['id' => $playlist->id]) }}" target="_blank">
+                                        <a href="{{ route('playlists.show', ['id' => $playlist->id]) }}">
                                             {{ $playlist->name }}
                                         </a>
                                     </td>
