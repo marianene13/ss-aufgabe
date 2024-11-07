@@ -7,9 +7,13 @@ use Carbon\Traits\Timestamp;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
+use Laravel\Scout\Attributes\SearchUsingFullText;
+use Laravel\Scout\Attributes\SearchUsingPrefix;
+use Laravel\Scout\Searchable;
 
 class Playlist extends Model
 {
+    use Searchable;
     use Timestamp;
 
     /**
@@ -77,5 +81,27 @@ class Playlist extends Model
             'api_link' => $playlist->href,
             'api_link_songs' => $playlist->tracks->href,
         ]);
+    }
+
+    public function searchableAs(): string
+    {
+        return 'playlists_index';
+    }
+
+    /**
+     * Get the indexable data array for the model.
+     *
+     * @return array<string, mixed>
+     */
+    #[SearchUsingPrefix(['id', 'api_playlist_id', 'api_link'])]
+    #[SearchUsingFullText(['name'])]
+    public function toSearchableArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'api_playlist_id' => $this->api_playlist_id,
+            'api_link' => $this->api_link,
+            'name' => $this->name,
+        ];
     }
 }

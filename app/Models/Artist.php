@@ -42,9 +42,9 @@ class Artist extends Model
 
     public static function findByArtistObject(\stdClass $artistObject): self
     {
-        $artist = self::where('api_artist_id', $artistObject->id)->get();
+        $artist = self::where('api_artist_id', $artistObject->id)->get()->first();
 
-        if ($artist->isEmpty()) {
+        if ($artist === null) {
             $artist = self::createFromArtistObject($artistObject);
         }
 

@@ -49,6 +49,17 @@ class Song extends Model
         return $this->belongsToMany(Playlist::class,PlaylistSong::class)->withTimestamps();
     }
 
+    public function durationInMinutes()
+    {
+        $minutes = floor($this->duration / 60000);
+        $seconds = str_pad(floor(($this->duration % 1000) / 60), 2, '0', STR_PAD_LEFT);
+
+        return sprintf('%s:%s',
+            $minutes,
+            $seconds
+        );
+    }
+
     public static function findByTrackObject(\stdClass $track): self
     {
         $song = self::where('api_track_id', $track->id)->get();
