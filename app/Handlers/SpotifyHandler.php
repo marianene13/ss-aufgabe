@@ -21,7 +21,9 @@ class SpotifyHandler
     }
 
     /**
-     * Get a playlist owned by a Spotify user.
+     * @param string $id
+     * @return stdClass
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function playlist(string $id): stdClass
     {
@@ -33,8 +35,9 @@ class SpotifyHandler
     }
 
     /**
-     * Get full details of the tracks of a playlist owned by a Spotify user.
+     * @param string $id
      * @return array<stdClass>
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function playlistTracks(string $id): array
     {
@@ -51,7 +54,9 @@ class SpotifyHandler
     }
 
     /**
-     * Get Spotify Catalog information about playlists that match a keyword string.
+     * @param string $query
+     * @return stdClass
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function searchPlaylists(string $query): stdClass
     {
@@ -72,13 +77,27 @@ class SpotifyHandler
     }
 
     /**
-     * Get Spotify catalog information for multiple tracks based on their Spotify IDs.
-     *
-     * @param  string  $id
+     * @param string $id
+     * @return stdClass
+     * @throws \GuzzleHttp\Exception\GuzzleException
      */
     public function track(string $id): stdClass
     {
         $endpoint = sprintf('%s/tracks/%s', self::API_URL, $id);
+
+        $response = $this->client->get($endpoint, $this->buildHeaders());
+
+        return $this->handleResponse($response);
+    }
+
+    /**
+     * @param string $id
+     * @return stdClass
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function audioFeatures(string $id): stdClass
+    {
+        $endpoint = sprintf('%s/audio-features/%s', self::API_URL, $id);
 
         $response = $this->client->get($endpoint, $this->buildHeaders());
 
@@ -90,6 +109,9 @@ class SpotifyHandler
         return json_decode($response->getBody()->getContents());
     }
 
+    /**
+     * @return array<string[]>
+     */
     protected function buildHeaders(): array
     {
         return [
