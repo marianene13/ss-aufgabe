@@ -63,6 +63,13 @@ class Playlist extends Model
         foreach ($items as $item) {
             $song = Song::findByTrackObject($item->track);
 
+            if (!$song->audioFeatures()->exists()) {
+                $audioFeaturesApi = $handler->audioFeatures($item->track->id);
+                $audioFeatures = AudioFeature::buildFromAudioFeatureObject($audioFeaturesApi);
+
+                $song->audioFeatures()->save($audioFeatures);
+            }
+
             $this->songs()->attach($song);
         }
 
