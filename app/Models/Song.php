@@ -3,6 +3,9 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Scout\Attributes\SearchUsingFullText;
 use Laravel\Scout\Attributes\SearchUsingPrefix;
@@ -38,18 +41,22 @@ class Song extends Model
         return Validator::make($data, static::$rules, static::$messages);
     }
 
-
-    public function artists()
+    public function artists(): BelongsToMany
     {
         return $this->belongsToMany(Artist::class, ArtistSong::class)->withTimestamps();
     }
 
-    public function playlists()
+    public function audioFeatures(): HasOne
+    {
+        return $this->hasOne(AudioFeature::class);
+    }
+
+    public function playlists(): BelongsToMany
     {
         return $this->belongsToMany(Playlist::class,PlaylistSong::class)->withTimestamps();
     }
 
-    public function durationInMinutes()
+    public function durationInMinutes(): string
     {
         $minutes = floor($this->duration / 60000);
         $seconds = str_pad(floor(($this->duration % 1000) / 60), 2, '0', STR_PAD_LEFT);
