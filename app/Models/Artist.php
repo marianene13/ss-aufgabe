@@ -39,4 +39,24 @@ class Artist extends Model
     public function songs(){
         return $this->belongsToMany(Song::class, PlaylistSong::class)->withTimestamps();
     }
+
+    public static function findByArtistObject(\stdClass $artistObject): self
+    {
+        $artist = self::where('api_artist_id', $artistObject->id)->get();
+
+        if ($artist->isEmpty()) {
+            $artist = self::createFromArtistObject($artistObject);
+        }
+
+        return $artist;
+    }
+
+    public static function createFromArtistObject(\stdClass $artist): self
+    {
+        return self::create([
+            'name' => $artist->name,
+            'api_artist_id' => $artist->id,
+            'api_artist_link' => $artist->href,
+        ]);
+    }
 }
