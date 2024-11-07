@@ -1,11 +1,18 @@
 <x-app-layout>
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ $playlist->name }}
-        </h2>
-        <small>
-            {{ $playlist->description }}
-        </small>
+        <div class="grid">
+            <div>
+                <img src="{{ $playlist->image_url }}" width="50%" />
+            </div>
+            <div class="lg:col-start-2 col-span-8">
+                <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+                    {{ $playlist->name }}
+                </h2>
+                <small>
+                    {!! $playlist->description !!}
+                </small>
+            </div>
+        </div>
     </x-slot>
 
     <div class="py-12">
